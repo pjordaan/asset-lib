@@ -12,9 +12,9 @@ use Hostnet\Component\Resolver\Import\ImportCollection;
 use Hostnet\Component\Resolver\Import\ImportCollectorInterface;
 
 /**
- * Import resolver for JS files.
+ * Import resolver for JS and TS files for finding ES6 imports. These still needs to be transpiled to ES5
  */
-final class TsImportCollector implements ImportCollectorInterface
+final class Es6ImportCollector implements ImportCollectorInterface
 {
     private $js_import_collector;
     private $nodejs_resolver;

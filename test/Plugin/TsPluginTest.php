@@ -11,7 +11,7 @@ use Hostnet\Component\Resolver\Bundler\Runner\RunnerInterface;
 use Hostnet\Component\Resolver\Cache\CachedImportCollector;
 use Hostnet\Component\Resolver\Config\ConfigInterface;
 use Hostnet\Component\Resolver\Event\AssetEvents;
-use Hostnet\Component\Resolver\Import\BuiltIn\TsImportCollector;
+use Hostnet\Component\Resolver\Import\BuiltIn\Es6ImportCollector;
 use Hostnet\Component\Resolver\Import\MutableImportFinderInterface;
 use Hostnet\Component\Resolver\Import\Nodejs\Executable;
 use PHPUnit\Framework\TestCase;
@@ -50,7 +50,7 @@ class TsPluginTest extends TestCase
     public function activateProvider(): array
     {
         return [
-            [TsImportCollector::class, false],
+            [Es6ImportCollector::class, false],
             [CachedImportCollector::class, true]
         ];
     }

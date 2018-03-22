@@ -16,14 +16,14 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 
 /**
- * @covers \Hostnet\Component\Resolver\Import\BuiltIn\TsImportCollector
+ * @covers \Hostnet\Component\Resolver\Import\BuiltIn\Es6ImportCollector
  */
-class TsImportCollectorTest extends TestCase
+class Es6ImportCollectorTest extends TestCase
 {
     /**
-     * @var TsImportCollector
+     * @var Es6ImportCollector
      */
-    private $ts_import_collector;
+    private $es6_import_collector;
 
     protected function setUp()
     {
@@ -31,7 +31,7 @@ class TsImportCollectorTest extends TestCase
         $config->getProjectRoot()->willReturn(__DIR__.'/../../fixtures');
         $config->getIncludePaths()->willReturn([]);
 
-        $this->ts_import_collector = new TsImportCollector(
+        $this->es6_import_collector = new Es6ImportCollector(
             new JsImportCollector(new FileResolver($config->reveal(), ['.ts', '.js', '.json', '.node'])),
             new FileResolver($config->reveal(), ['.ts', '.js', '.json', '.node']),
             ['js', 'ts']
@@ -43,7 +43,7 @@ class TsImportCollectorTest extends TestCase
      */
     public function testSupports($expected, File $file)
     {
-        self::assertEquals($expected, $this->ts_import_collector->supports($file));
+        self::assertEquals($expected, $this->es6_import_collector->supports($file));
     }
 
     public function supportsProvider()
@@ -62,7 +62,7 @@ class TsImportCollectorTest extends TestCase
         $imports = new ImportCollection();
         $file    = new File('resolver/ts/import-syntax/main.ts');
 
-        $this->ts_import_collector->collect(__DIR__.'/../../fixtures', $file, $imports);
+        $this->es6_import_collector->collect(__DIR__.'/../../fixtures', $file, $imports);
 
         self::assertEquals([
             new Import('./Import', new File('resolver/ts/import-syntax/Import.ts')),
@@ -93,11 +93,11 @@ class TsImportCollectorTest extends TestCase
 
         $resolver->asRequire(Argument::any(), Argument::any())->willThrow(new \RuntimeException());
 
-        $ts_import_collector = new TsImportCollector(
+        $es6_import_collector = new Es6ImportCollector(
             new JsImportCollector($resolver->reveal()),
             $resolver->reveal()
         );
-        $ts_import_collector->collect(
+        $es6_import_collector->collect(
             __DIR__.'/../../fixtures',
             new File('resolver/ts/import-syntax/main.ts'),
             $imports
